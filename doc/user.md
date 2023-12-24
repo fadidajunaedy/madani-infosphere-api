@@ -207,6 +207,40 @@ Response Body Error :
 }
 ```
 
+## Change Password API
+
+Endpoint : POST /api/users/change-password
+
+Request Cookies :
+
+- accessToken : unique-token
+
+Request Body Success:
+
+```json
+{
+  "currentPassword": "rahasia",
+  "newPassword": "masih-rahasia"
+}
+```
+
+Response Body Success :
+
+```json
+{
+  "success": true,
+  "message": "Change password successfully"
+}
+```
+
+Response Body Error :
+
+```json
+{
+  "errors": "Current password is wrong"
+}
+```
+
 ## Forgot Password API
 
 Endpoint : POST /api/users/forgot-password
@@ -242,7 +276,7 @@ Response Body Error :
 
 ## Reset Password API
 
-Endpoint : POST /api/users/change-password
+Endpoint : POST /api/users/reset-password
 
 Request Body Success:
 
