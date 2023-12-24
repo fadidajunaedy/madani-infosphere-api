@@ -257,8 +257,7 @@ Request Body Success:
 ```json
 {
   "success": true,
-  "message": "Reset password successfully",
-  }
+  "message": "Reset password successfully"
 }
 ```
 
