@@ -284,7 +284,7 @@ Request Body Success:
 {
   "userId": 1,
   "token": "unique-token",
-  "new_password": "rahasia2"
+  "newPassword": "rahasia2"
 }
 ```
 
