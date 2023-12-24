@@ -7,6 +7,8 @@ const logger = winston.createLogger({
     transports: [
         new winston.transports.File({ filename: path.join('logs', 'error.log'), level: 'error', timestamp: true }),
         new winston.transports.File({ filename: path.join('logs', 'info.log'), level: 'info', timestamp: true }),
+        new winston.transports.File({ filename: path.join('logs', 'query.log'), level: 'query', timestamp: true }),
+        new winston.transports.File({ filename: path.join('logs', 'warning.log'), level: 'warn', timestamp: true }),
         new winston.transports.File({ filename: path.join('logs', 'combined.log'), timestamp: true }),
     ]
 })
