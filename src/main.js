@@ -1,4 +1,4 @@
-const { web } = require("./application/web.js")
+const web = require("./application/web.js")
 const { logger } = require("./application/logging.js")
 
 web.listen(3000, () => {
