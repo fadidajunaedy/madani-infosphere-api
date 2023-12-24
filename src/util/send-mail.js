@@ -12,7 +12,6 @@ const transporter = nodemailer.createTransport({
 
 const sendEmailVerification = async (email, url) => {
 	try {
-
 		await transporter.sendMail({
 			from: process.env.EMAIL_USER,
 			to: email,
@@ -28,7 +27,7 @@ const sendEmailVerification = async (email, url) => {
             `,
 		})
 	} catch (error) {
-		return error;
+		return error
 	}
 }
 
@@ -49,7 +48,7 @@ const sendEmailResetPassword = async (email, url) => {
             `,
 		})
 	} catch (error) {
-		return error;
+		return error
 	}
 }
 
