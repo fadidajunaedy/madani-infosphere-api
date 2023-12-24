@@ -1,0 +1,114 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                 Int                  @id @default(autoincrement())
+  name               String               @db.VarChar(100)
+  username           String               @unique
+  email              String               @unique
+  password           String               @db.VarChar(100)
+  position           String               @db.VarChar(100)
+  role               String               @db.VarChar(100)
+  isVerified         Boolean              @db.TinyInt()
+  status             Boolean              @db.TinyInt()
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  RefreshToken       RefreshToken[]
+  ResetPasswordToken ResetPasswordToken[]
+  Report             Report[]
+  Event              Event[]
+  Contact            Contact[]
+
+  @@map("users")
+}
+
+model RefreshToken {
+  userId    Int      @id
+  user      User     @relation(fields: [userId], references: [id])
+  token     String   @db.VarChar(100)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("refreshTokens")
+}
+
+model ResetPasswordToken {
+  userId    Int      @id
+  user      User     @relation(fields: [userId], references: [id])
+  token     String   @db.VarChar(100)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("resetPasswordTokens")
+}
+
+model Tag {
+  id        Int      @id @default(autoincrement())
+  title     String   @unique @db.VarChar(100)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("tags")
+}
+
+model Report {
+  id             Int      @id @default(autoincrement())
+  category       String   @db.VarChar(100)
+  subcategory    String   @db.VarChar(100)
+  description    String   @db.VarChar(255)
+  tags           String   @db.VarChar(255)
+  year           Int?     @db.Int
+  file           String?  @db.VarChar(255)
+  linkFile       String?  @db.VarChar(255)
+  relatedProgram String?  @db.VarChar(100)
+  createdUser    String   @db.VarChar(100)
+  user           User     @relation(fields: [createdUser], references: [username])
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("reports")
+}
+
+model Event {
+  id          Int      @id @default(autoincrement())
+  title       String   @db.VarChar(100)
+  description String   @db.VarChar(255)
+  theme       String   @db.VarChar(100)
+  startDate   String   @db.VarChar(100)
+  startTime   String   @db.VarChar(100)
+  endDate     String   @db.VarChar(100)
+  endTime     String   @db.VarChar(100)
+  createdUser String   @db.VarChar(100)
+  user        User     @relation(fields: [createdUser], references: [username])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("events")
+}
+
+model Contact {
+  id             Int      @id @default(autoincrement())
+  name           String   @db.VarChar(100)
+  institution    String?  @db.VarChar(100)
+  email          String?  @db.VarChar(100)
+  city           String?  @db.VarChar(100)
+  telephone      String?  @db.VarChar(100)
+  position       String?  @db.VarChar(100)
+  category       String?  @db.VarChar(100)
+  classification String?  @db.VarChar(100)
+  createdUser    String   @db.VarChar(100)
+  user           User     @relation(fields: [createdUser], references: [username])
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("contacts")
+}
