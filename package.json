@@ -2,7 +2,7 @@
   "name": "madani-infosphere-api",
   "version": "1.0.0",
   "description": "Madani Infosphere REST API",
-  "main": "src/index.js",
+  "main": "src/main.js",
   "scripts": {
     "test": "jest -i"
   },
