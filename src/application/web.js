@@ -8,8 +8,9 @@ config()
 
 const web = express()
 
-web.use(express.json())
 web.use(cookieParser())
+web.use(express.json())
+web.use(express.urlencoded({ extended: true }))
 web.use(
     cors({
       origin: ["http://localhost:5173"],
