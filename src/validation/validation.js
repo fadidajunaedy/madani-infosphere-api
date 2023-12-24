@@ -12,6 +12,4 @@ const validate = (schema, request) => {
     }
 }
 
-module.exports = {
-    validate
-}
+module.exports = validate

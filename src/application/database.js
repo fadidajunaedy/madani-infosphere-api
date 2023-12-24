@@ -38,4 +38,4 @@ prismaClient.$on('query', (e) => {
     logger.info(e)
 })
 
-module.exports = { prismaClient }
+module.exports = prismaClient
