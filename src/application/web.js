@@ -1,6 +1,7 @@
 const express = require("express")
 const cors = require('cors')
 const cookieParser = require("cookie-parser")
+const publicRouter = require("../route/public-api.js")
 const { errorMiddleware } = require("../middleware/error-middleware.js")
 const { config } = require("dotenv")
 
@@ -19,5 +20,7 @@ web.use(
     })
 )
 web.use(errorMiddleware)
+
+web.use(publicRouter)
 
 module.exports = web
