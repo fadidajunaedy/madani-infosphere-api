@@ -1,5 +1,5 @@
 const  express = require("express")
-import {errorMiddleware} from "../middleware/error-middleware.js";
+const { errorMiddleware } = require("../middleware/error-middleware.js")
 
 const web = express()
 
