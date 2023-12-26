@@ -71,9 +71,24 @@ const update = async (req, res, next) => {
     }
 }
 
+const get = async (req, res, next) => {
+    try {
+        const user = req.user
+        const result = await userService.get(user)
+        res.status(200).json({
+            success: true,
+            message: "Get User Successfully",
+            data: result
+        })
+    } catch(e) {
+        next(e)
+    }
+}
+
 module.exports = {
     register,
     verify,
     login,
-    update
+    update,
+    get
 }

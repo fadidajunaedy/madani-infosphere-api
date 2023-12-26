@@ -7,5 +7,6 @@ const privateRouter = new express.Router()
 privateRouter.use(authMiddleware)
 
 privateRouter.patch('/api/users/me', userController.update)
+privateRouter.get('/api/users/me', userController.get)
 
 module.exports = { privateRouter }

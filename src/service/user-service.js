@@ -125,8 +125,6 @@ const login = async (request) => {
         throw new ResponseError(401, "Email or password is wrong")
     }
 
-    console.log(user.id)
-
     if (!user.isVerified) {
         if (!user.verificationToken) {
             const verificationToken = await generateEmailVerificationToken(user)
@@ -173,7 +171,6 @@ const login = async (request) => {
 const update = async (user, request) => {
     request = validate(updateUserValidation, request)
     
-    console.log(request)
     return await User.update({
         where: {
             id: user.id
@@ -189,9 +186,20 @@ const update = async (user, request) => {
     })
 }
 
+const get = async (user) => {
+    const userData = await User.findUnique({ where: { id: user.id }})
+    
+    if (!userData) {
+        throw new ResponseError(404, "User is not found")
+    }
+
+    return userData
+}
+
 module.exports = {
     register,
     verify,
     login,
-    update
+    update,
+    get
 }
