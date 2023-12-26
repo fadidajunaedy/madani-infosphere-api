@@ -11,7 +11,7 @@ Request Body :
   "name": "fadidajunaedy",
   "username": "fadidajunaedy",
   "email": "fadidajunaedy@gmail.com",
-  "password": "rahasia",
+  "password": "Rahasia123-",
   "position": "Executive Director"
 }
 ```
@@ -21,12 +21,19 @@ Response Body Success :
 ```json
 {
   "success": true,
-  "message": "User register successfully"
+  "message": "User register successfully",
+  "data": {
+    "id": 1,
+    "name": "Fadida Zanetti Junaedy",
+    "username": "fadidajunaedy",
+    "email": "fadidajunaedy@gmail.com",
+    "position": "Executive Director"
+  }
 }
 ```
 
 ```code
-Verification email sent to registered email
+Verification Email Token sent to registered email
 ```
 
 Response Body Error :
@@ -76,7 +83,7 @@ Request Body :
 ```json
 {
   "email": "fadidajunaedy@gmail.com",
-  "password": "rahasia"
+  "password": "Rahasia123-"
 }
 ```
 
@@ -130,7 +137,7 @@ Response Body Success :
     "name": "Fadida Junaedy",
     "username": "fadidajunaedy",
     "email": "fadidajunaedy@gmail.com",
-    "password": "rahasia", // should be encryption by bcrypt
+    "password": "Rahasia123-", // should be encryption by bcrypt
     "position": "HRGA",
     "role": "user",
     "isVerified": true, // should verify email first
@@ -166,7 +173,7 @@ Response Body Success:
     "name": "Fadida Junaedy",
     "username": "fadidajunaedy",
     "email": "fadidajunaedy@gmail.com",
-    "password": "rahasia", // should be encryption by bcrypt
+    "password": "Rahasia123-", // should be encryption by bcrypt
     "position": "HRGA",
     "role": "user",
     "isVerified": true, // should verify email first
@@ -219,8 +226,8 @@ Request Body Success:
 
 ```json
 {
-  "currentPassword": "rahasia",
-  "newPassword": "masih-rahasia"
+  "currentPassword": "Rahasia123-",
+  "newPassword": "MasihRahasia123-"
 }
 ```
 
@@ -318,7 +325,7 @@ Request Body :
   "name": "fadidajunaedy",
   "username": "fadidajunaedy",
   "email": "fadidajunaedy@gmail.com",
-  "password": "rahasia",
+  "password": "Rahasia123-",
   "position": "Executive Director",
   "role": "role",
   "isVerified": true,
@@ -358,7 +365,7 @@ Request Body :
   "name": "fadidazanetti", //optional
   "username": "fadidazanetti", //optional
   "email": "fadidazanetti@gmail.com", //optional
-  "password": "rahasia", //optional
+  "password": "Rahasia123-", //optional
   "position": "HRGA", //optional
   "role": "user", //optional
   "isVerified": true, //optional
@@ -377,7 +384,7 @@ Response Body Success :
     "name": "fadidazanetti",
     "username": "fadidazanetti",
     "email": "fadidazanetti@gmail.com",
-    "password": "rahasia",
+    "password": "Rahasia123-",
     "position": "HRGA",
     "role": "user",
     "isVerified": true,
@@ -413,7 +420,7 @@ Response Body Success:
     "name": "fadidazanetti",
     "username": "fadidazanetti",
     "email": "fadidazanetti@gmail.com",
-    "password": "rahasia",
+    "password": "Rahasia123-",
     "position": "HRGA",
     "role": "user",
     "isVerified": true,
@@ -450,7 +457,7 @@ Response Body Success:
       "name": "fadidazanetti",
       "username": "fadidazanetti",
       "email": "fadidazanetti@gmail.com",
-      "password": "rahasia",
+      "password": "Rahasia123-",
       "position": "HRGA",
       "role": "user",
       "isVerified": true,
