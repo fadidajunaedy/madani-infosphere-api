@@ -329,7 +329,7 @@ Response Body Success :
     "name": "Fadida Zanetti Junaedy",
     "username": "fadidajunaedy24",
     "email": "fadidajunaedy24@gmail.com",
-    "password": "Qq332211-", //Hashed Password
+    "password": "Qq332211-", // would be hashing
     "position": "HRGA",
     "role": "user",
     "isVerified": true,
@@ -365,9 +365,9 @@ Request Body :
 {
   "name": "Fadida Zanetti", //optional
   "password": "Rahasia123-", //optional
-  "position": "HRGA", //optional
-  "isVerified": true, //optional
-  "status": false //optional
+  "position": "Klima", //optional
+  "isVerified": false, //optional
+  "status": false
 }
 ```
 
@@ -378,17 +378,17 @@ Response Body Success :
   "success": true,
   "message": "User update successfully",
   "data": {
-    "id": 1,
+    "id": 2,
     "name": "Fadida Zanetti",
     "username": "fadidajunaedy24",
     "email": "fadidajunaedy24@gmail.com",
-    "password": "Rahasia123-", //Hashed Password
-    "position": "HRGA",
+    "password": "Rahasia123-", // would be hashing
+    "position": "Klima",
     "role": "user",
-    "isVerified": true,
-    "status": true,
+    "isVerified": false,
+    "status": false,
     "createdAt": "2023-12-26T15:56:49.520Z",
-    "updatedAt": "2023-12-26T15:56:49.520Z",
+    "updatedAt": "2023-12-26T17:25:48.936Z",
     "verificationToken": null,
     "refreshToken": null,
     "resetPasswordToken": null

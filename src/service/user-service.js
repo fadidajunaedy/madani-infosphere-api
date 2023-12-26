@@ -7,7 +7,8 @@ const {
     changePasswordUserValidation,
     forgotPasswordValidation,
     resetPasswordUserValidation,
-    createUserValidation
+    createUserValidation,
+    updateByIdUserValidation
 } = require("../validation/user-validation.js")
 const validate = require("../validation/validation.js")
 const hashPassword = require("../util/hash-password.js")
@@ -296,6 +297,22 @@ const create = async (request) => {
     return newUser
 }
 
+const updateById = async (id, request) => {
+    id = validate(getUserValidation, id)
+    request = validate(updateByIdUserValidation, request)
+    console.log(id)
+    if (request.password) {
+        request.password = hashPassword(request.password)
+    }
+
+    return await User.update({
+        where: {
+            id: id
+        },
+        data: request
+    })
+}
+
 const getById = async (id) => {
     id = validate(getUserValidation, id)
     const user = await User.findUnique({ 
@@ -333,6 +350,7 @@ module.exports = {
     forgotPassword,
     resetPassword,
     create,
+    updateById,
     getById,
     getAll
 }
