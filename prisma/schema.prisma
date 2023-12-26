@@ -11,44 +11,25 @@ datasource db {
 }
 
 model User {
-  id                 Int                  @id @default(autoincrement())
-  name               String               @db.VarChar(100)
-  username           String               @unique
-  email              String               @unique
-  password           String               @db.VarChar(100)
-  position           String               @db.VarChar(100)
-  role               String               @db.VarChar(100)
-  isVerified         Boolean              @db.TinyInt()
-  status             Boolean              @db.TinyInt()
-  createdAt          DateTime             @default(now())
-  updatedAt          DateTime             @updatedAt
-  RefreshToken       RefreshToken[]
-  ResetPasswordToken ResetPasswordToken[]
+  id                 Int       @id @default(autoincrement())
+  name               String    @db.VarChar(100)
+  username           String    @unique
+  email              String    @unique
+  password           String
+  position           String    @db.VarChar(100)
+  role               String    @default("user")
+  isVerified         Boolean   @default(false)
+  status             Boolean   @default(false)
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  verificationToken  String?
+  refreshToken       String?
+  resetPasswordToken String?
   Report             Report[]
   Event              Event[]
   Contact            Contact[]
 
   @@map("users")
-}
-
-model RefreshToken {
-  userId    Int      @id
-  user      User     @relation(fields: [userId], references: [id])
-  token     String   @db.VarChar(100)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("refreshTokens")
-}
-
-model ResetPasswordToken {
-  userId    Int      @id
-  user      User     @relation(fields: [userId], references: [id])
-  token     String   @db.VarChar(100)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("resetPasswordTokens")
 }
 
 model Tag {
@@ -65,7 +46,7 @@ model Report {
   category       String   @db.VarChar(100)
   subcategory    String   @db.VarChar(100)
   description    String   @db.VarChar(255)
-  tags           String   @db.VarChar(255)
+  tags           String   @db.Text
   year           Int?     @db.Int
   file           String?  @db.VarChar(255)
   linkFile       String?  @db.VarChar(255)
