@@ -46,16 +46,7 @@ Response Body Error :
 
 ## Verify Email User API
 
-Endpoint : POST /api/users/verify
-
-Request Body :
-
-```json
-{
-  "userId": 1,
-  "token": "unique-token"
-}
-```
+Endpoint : PATCH /api/users/:id/verify/:token
 
 Response Body Success :
 
