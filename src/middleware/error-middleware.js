@@ -1,4 +1,4 @@
-const { ResponseError } = require("../error/response-error.js")
+const ResponseError = require("../error/response-error.js")
 
 const errorMiddleware = async (err, req, res, next) => {
     if (!err) {
@@ -17,6 +17,4 @@ const errorMiddleware = async (err, req, res, next) => {
     }
 }
 
-module.exports = {
-    errorMiddleware
-}
+module.exports = errorMiddleware

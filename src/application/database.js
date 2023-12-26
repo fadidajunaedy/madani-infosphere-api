@@ -1,5 +1,5 @@
 const { PrismaClient } = require("@prisma/client")
-const { logger } = require("./logging.js")
+const logger = require("./logging.js")
 
 const prismaClient = new PrismaClient({
     log: [

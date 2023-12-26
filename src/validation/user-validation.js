@@ -8,8 +8,8 @@ const registerUserValidation = Joi.object({
     password: passwordComplexity().required(),
     position: Joi.string().required(),
     role: Joi.string().default("user"),
-    isVerified: Joi.boolean().default(0),
-    status: Joi.boolean().default(0)
+    isVerified: Joi.boolean().default(false),
+    status: Joi.boolean().default(false)
 })
 
 const verifyEmailUserValidation = Joi.object({

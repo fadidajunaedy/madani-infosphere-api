@@ -7,6 +7,11 @@
     "test": "jest -i",
     "start": "node src/main.js"
   },
+  "jest": {
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    }
+  },
   "keywords": [
     "madani",
     "api",

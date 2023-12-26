@@ -12,7 +12,8 @@ const validate = require("../validation/validation.js")
 const hashPassword = require("../util/hash-password.js")
 const { 
     generateAccessToken, 
-    generateRefreshToken 
+    generateRefreshToken,
+    generateEmailVerificationToken
 } = require("../util/generate-token.js")
 const {
     sendEmailVerification, 
@@ -39,14 +40,38 @@ const register = async (request) => {
     
     user.password = hashPassword(user.password)
     
-    const newUser = await User.create(user)
+    const newUser = await User.create({
+        data: user,
+        select: {
+            id: true,
+            name: true,
+            username: true,
+            email: true,
+            position: true,
+        }
+    })
 
-    const verificationToken = await VerificationToken.create({ userId:newUser.id, token: crypto.randomBytes(24).toString("hex") })
+    const verificationToken = await generateEmailVerificationToken(newUser.id)
 
-    const url = `http://localhost:5173/verify/${verificationToken.userId}/${verificationToken.token}`
-    await sendEmailVerification(newUser.email, url)
+    const userWithVerificationToken = await User.update({
+        where: { id: newUser.id },
+        data: {
+            verificationToken: verificationToken
+        },
+        select: {
+            id: true,
+            name: true,
+            username: true,
+            email: true,
+            position: true,
+            verificationToken: true,
+        },
+    })
 
-    return newUser
+    const url = `http://localhost:5173/auth/verify?${userWithVerificationToken.verificationToken}`
+    await sendEmailVerification(userWithVerificationToken.email, url)
+
+    return userWithVerificationToken
 }
 
 module.exports = {
