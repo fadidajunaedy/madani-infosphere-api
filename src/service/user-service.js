@@ -71,7 +71,7 @@ const register = async (request) => {
     const url = `http://localhost:5173/auth/verify?${userWithVerificationToken.verificationToken}`
     await sendEmailVerification(userWithVerificationToken.email, url)
 
-    return userWithVerificationToken
+    return newUser
 }
 
 module.exports = {
