@@ -210,6 +210,27 @@ const remove = async (req, res, next) => {
     }
 }
 
+const refreshAccessToken = async (req, res, next) => {
+    try {
+        const refreshToken = req.cookies.refreshToken
+        const result = await userService.refreshAccessToken(refreshToken)
+
+        res.cookie('accessToken', result, { 
+            sameSite: 'strict',
+            maxAge: 180 * 60 * 1000, // 180 menit dalam milidetik
+            httpOnly: true,
+            withCredentials: true, 
+        })
+
+        res.status(200).json({
+            success: true,
+            message: "Refresh token successfully"
+        })
+    } catch (e) {
+        next(e)
+    }
+}
+
 module.exports = {
     register,
     verify,
@@ -224,5 +245,6 @@ module.exports = {
     updateById,
     getById,
     getAll,
-    remove
+    remove,
+    refreshAccessToken
 }

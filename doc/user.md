@@ -296,6 +296,35 @@ Response Body Error :
 }
 ```
 
+## Refresh Access Token API
+
+Endpoint : POST /api/users/refresh-token
+
+Request Cookies :
+
+- refreshToken : unique-token
+
+Response Body Success :
+
+```json
+{
+  "success": true,
+  "message": "Refresh token successfully"
+}
+```
+
+Response Cookies :
+
+- accessToken : unique-token (new)
+
+Response Body Error :
+
+```json
+{
+  "errors": "Invalid token"
+}
+```
+
 ## Create User API (Admin)
 
 Endpoint : POST /api/users

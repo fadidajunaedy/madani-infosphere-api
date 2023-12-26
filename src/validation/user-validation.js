@@ -57,6 +57,8 @@ const updateByIdUserValidation = Joi.object({
     status: Joi.boolean().optional()
 })
 
+const refreshTokenValidation = Joi.string().required()
+
 module.exports = {
     registerUserValidation,
     verifyEmailUserValidation,
@@ -67,5 +69,6 @@ module.exports = {
     forgotPasswordValidation,
     resetPasswordUserValidation,
     createUserValidation,
-    updateByIdUserValidation
+    updateByIdUserValidation,
+    refreshTokenValidation
 }

@@ -9,8 +9,10 @@ privateRouter.use(authMiddleware)
 
 privateRouter.patch('/api/users/me', userController.update)
 privateRouter.get('/api/users/me', userController.get)
-privateRouter.delete('/api/users/logout', userController.logout)
 privateRouter.post('/api/users/change-password', userController.changePassword)
+privateRouter.delete('/api/users/logout', userController.logout)
+
+privateRouter.post('/api/users/refresh-token', userController.refreshAccessToken)
 
 privateRouter.post('/api/users', adminMiddleware, userController.create)
 privateRouter.patch('/api/users/:id', adminMiddleware, userController.updateById)

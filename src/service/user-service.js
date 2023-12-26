@@ -8,7 +8,8 @@ const {
     forgotPasswordValidation,
     resetPasswordUserValidation,
     createUserValidation,
-    updateByIdUserValidation
+    updateByIdUserValidation,
+    refreshTokenValidation
 } = require("../validation/user-validation.js")
 const validate = require("../validation/validation.js")
 const hashPassword = require("../util/hash-password.js")
@@ -355,6 +356,18 @@ const remove = async (id) => {
     return await User.delete({ where: { id: id } })
 }
 
+const refreshAccessToken = async (refreshToken) => {
+    refreshToken = validate(refreshTokenValidation, refreshToken)
+
+    const user = await User.findFirst({ where: { refreshToken: refreshToken } })
+    if (!user) {
+        throw new ResponseError(401, "Invalid token")
+    }
+
+    const newAccessToken = await generateAccessToken(user)
+    return newAccessToken
+}
+
 
 module.exports = {
     register,
@@ -369,5 +382,6 @@ module.exports = {
     updateById,
     getById,
     getAll,
-    remove
+    remove,
+    refreshAccessToken
 }
