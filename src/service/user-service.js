@@ -13,7 +13,8 @@ const hashPassword = require("../util/hash-password.js")
 const { 
     generateAccessToken, 
     generateRefreshToken,
-    generateEmailVerificationToken
+    generateEmailVerificationToken,
+    generateResetPasswordToken
 } = require("../util/generate-token.js")
 const {
     sendEmailVerification, 
@@ -222,11 +223,37 @@ const changePassword = async (user, request) => {
     })
 }
 
+const forgotPassword = async (email) => {
+    email = validate(forgotPasswordValidation, email)
+
+    const user = await User.findUnique({ where: { email: email } })
+    if (!user) {
+        throw new ResponseError(404, "Email is not found")
+    }
+
+    const resetToken = await generateResetPasswordToken(user)
+    await User.update({
+        where: {
+            id: user.id
+        },
+        data: {
+            resetPasswordToken: resetToken
+        }
+    })
+
+    const resetURL = `http://localhost:5173/auth/reset-password/${resetToken}`
+    await sendEmailResetPassword(user.email, resetURL)
+
+    return
+}
+
+
 module.exports = {
     register,
     verify,
     login,
     update,
     get,
-    changePassword
+    changePassword,
+    forgotPassword
 }
