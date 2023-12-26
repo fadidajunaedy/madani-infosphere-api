@@ -276,9 +276,8 @@ Request Body Success:
 
 ```json
 {
-  "userId": 1,
   "token": "unique-token",
-  "newPassword": "rahasia2"
+  "newPassword": "Rahasia2-"
 }
 ```
 

@@ -34,7 +34,6 @@ const changePasswordUserValidation = Joi.object({
 const forgotPasswordValidation = Joi.string().email().required()
 
 const resetPasswordUserValidation = Joi.object({
-    userId: Joi.number().required(),
     token: Joi.string().required(),
     newPassword: passwordComplexity().required()
 })

@@ -247,6 +247,30 @@ const forgotPassword = async (email) => {
     return
 }
 
+const resetPassword = async (request) => {
+    request = validate(resetPasswordUserValidation, request)
+
+    const checkToken = User.findFirst({ where: { resetPasswordToken: request.token } })
+    if (!checkToken) {
+        throw new ResponseError(404, "Invalid token")
+    }
+
+    const decodedResetPasswordToken = jwt.verify(request.token, process.env.SECRET_KEY)
+    const hashedPassword = hashPassword(request.newPassword)
+
+    return await User.update({
+        where: {
+            id: decodedResetPasswordToken.id,
+            resetPasswordToken: request.token            
+        },
+        data: {
+            password: hashedPassword,
+            resetPasswordToken: null
+        }
+    })
+
+}
+
 
 module.exports = {
     register,
@@ -255,5 +279,6 @@ module.exports = {
     update,
     get,
     changePassword,
-    forgotPassword
+    forgotPassword,
+    resetPassword
 }

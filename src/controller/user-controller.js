@@ -117,11 +117,23 @@ const changePassword = async (req, res, next) => {
 const forgotPassword = async (req, res, next) => {
     try {
         const email = req.body.email
-        const result = await userService.forgotPassword(email)
+        await userService.forgotPassword(email)
         res.status(200).json({
             success: true,
-            message: "Password reset email sent successfully",
-            data: result
+            message: "Password reset email sent successfully"
+        })
+    } catch (e) {
+        next(e)
+    }
+}
+
+const resetPassword = async (req, res, next) => {
+    try {
+        const request = req.body
+        await userService.resetPassword(request)
+        res.status(200).json({
+            success: true,
+            message: "Reset password successfully"
         })
     } catch (e) {
         next(e)
@@ -136,5 +148,6 @@ module.exports = {
     get,
     logout,
     changePassword,
-    forgotPassword
+    forgotPassword,
+    resetPassword
 }
