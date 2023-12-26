@@ -23,6 +23,7 @@ const jwt = require("jsonwebtoken")
 const crypto = require("crypto")
 const ResponseError = require("../error/response-error.js")
 const prismaClient = require("../application/database.js")
+const { request } = require("http")
 const User = prismaClient.user
 const VerificationToken = prismaClient.verificationToken
 
@@ -196,12 +197,36 @@ const get = async (user) => {
     return userData
 }
 
+const changePassword = async (user, request) => {
+    request = validate(changePasswordUserValidation, request)
 
+    const hashedPassword = hashPassword(request.currentPassword)
+    if (hashedPassword !== user.password) {
+        throw new ResponseError(401, "Current password is not match!")
+    }
+
+    const newPassword = hashPassword(request.newPassword)
+
+    return await User.update({
+        where: { id: user.id },
+        data: {
+            password: newPassword
+        },
+        select: {
+            id: true,
+            name: true,
+            username: true,
+            email: true,
+            position: true
+        }
+    })
+}
 
 module.exports = {
     register,
     verify,
     login,
     update,
-    get
+    get,
+    changePassword
 }
