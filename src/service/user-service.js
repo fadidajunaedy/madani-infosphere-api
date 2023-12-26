@@ -268,7 +268,32 @@ const resetPassword = async (request) => {
             resetPasswordToken: null
         }
     })
+}
 
+const getById = async (id) => {
+    id = validate(getUserValidation, id)
+    const user = await User.findUnique({ 
+        where: { 
+            id: id,
+            role: "user"
+        }
+    })
+
+    if (!user) {
+        throw new ResponseError(404, "User is not found")
+    }
+
+    return user
+}
+
+const getAll = async () => {
+    const user = await User.findMany({})
+
+    if (!user) {
+        throw new ResponseError(404, "User is not found")
+    }
+
+    return user
 }
 
 
@@ -280,5 +305,7 @@ module.exports = {
     get,
     changePassword,
     forgotPassword,
-    resetPassword
+    resetPassword,
+    getById,
+    getAll
 }
