@@ -85,10 +85,25 @@ const get = async (req, res, next) => {
     }
 }
 
+const logout = async (req, res, next) => {
+    try {
+        res.clearCookie('accessToken');
+        res.clearCookie('refreshToken');
+        res.status(200).json({
+            success: true,
+            message: "Logout Successfully",
+            data: "OK"
+        });
+    } catch (e) {
+         next(e)
+    }
+}
+
 module.exports = {
     register,
     verify,
     login,
     update,
-    get
+    get,
+    logout
 }

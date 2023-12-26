@@ -196,6 +196,8 @@ const get = async (user) => {
     return userData
 }
 
+
+
 module.exports = {
     register,
     verify,

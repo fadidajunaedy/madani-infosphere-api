@@ -8,5 +8,6 @@ privateRouter.use(authMiddleware)
 
 privateRouter.patch('/api/users/me', userController.update)
 privateRouter.get('/api/users/me', userController.get)
+privateRouter.delete('/api/users/logout', userController.logout)
 
 module.exports = { privateRouter }
