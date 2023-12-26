@@ -14,6 +14,21 @@ const register = async (req, res, next) => {
     }
 }
 
+const verify = async (req, res, next) => {
+    try {
+        const token = req.params.token
+        const result = await userService.verify(token)
+        res.status(200).json({
+            success: true,
+            message: "User Verification Successfully",
+            data: result
+        })
+    } catch (e) {
+        next(e)
+    }
+}
+
 module.exports = {
-    register
+    register,
+    verify
 }

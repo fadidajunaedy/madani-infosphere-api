@@ -12,10 +12,7 @@ const registerUserValidation = Joi.object({
     status: Joi.boolean().default(false)
 })
 
-const verifyEmailUserValidation = Joi.object({
-    userId: Joi.number().required(),
-    token: Joi.string().required()
-})
+const verifyEmailUserValidation = Joi.string().required()
 
 const loginUserValidation = Joi.object({
     email: Joi.string().email().required(),

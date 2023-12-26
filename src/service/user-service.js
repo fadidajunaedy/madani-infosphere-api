@@ -19,6 +19,7 @@ const {
     sendEmailVerification, 
     sendEmailResetPassword
 } = require("../util/send-mail.js")
+const jwt = require("jsonwebtoken")
 const crypto = require("crypto")
 const ResponseError = require("../error/response-error.js")
 const prismaClient = require("../application/database.js")
@@ -51,7 +52,7 @@ const register = async (request) => {
         }
     })
 
-    const verificationToken = await generateEmailVerificationToken(newUser.id)
+    const verificationToken = await generateEmailVerificationToken(newUser)
 
     const userWithVerificationToken = await User.update({
         where: { id: newUser.id },
@@ -74,6 +75,43 @@ const register = async (request) => {
     return newUser
 }
 
+const verify = async (token) => {
+    token = validate(verifyEmailUserValidation, token)
+
+    const findToken = await User.findFirst({ 
+        where: { verificationToken: token }
+    })
+
+    if (!findToken) {
+        throw new ResponseError(404, "Token invalid")
+    }
+
+    const decodedVerificationToken = jwt.verify(token, process.env.SECRET_KEY)
+    const expirationTime = decodedVerificationToken.exp * 1000
+    const currentTime = Date.now()
+    if (expirationTime <= currentTime) {
+        throw new ResponseError(400, "Token expired")
+    }
+
+    return await User.update({
+        where: { 
+            id: decodedVerificationToken.id,
+            verificationToken: token 
+        },
+        data: {
+            verificationToken: null
+        },
+        select: {
+            id: true,
+            name: true,
+            username: true,
+            email: true,
+            position: true
+        }
+    })
+}
+
 module.exports = {
-    register
+    register,
+    verify
 }
