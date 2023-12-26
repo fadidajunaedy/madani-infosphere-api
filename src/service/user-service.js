@@ -339,6 +339,22 @@ const getAll = async () => {
     return user
 }
 
+const remove = async (id) => {
+    id = validate(getUserValidation, id)
+    const user = await User.findUnique({ 
+        where: { 
+            id: id,
+            role: "user"
+        }
+    })
+
+    if (!user) {
+        throw new ResponseError(404, "User is not found")
+    }
+
+    return await User.delete({ where: { id: id } })
+}
+
 
 module.exports = {
     register,
@@ -352,5 +368,6 @@ module.exports = {
     create,
     updateById,
     getById,
-    getAll
+    getAll,
+    remove
 }

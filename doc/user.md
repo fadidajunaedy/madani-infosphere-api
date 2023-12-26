@@ -492,7 +492,7 @@ Response Body Success :
 ```json
 {
   "success": true,
-  "message": "Deleted Data Successfully"
+  "message": "Delete user successfully"
 }
 ```
 

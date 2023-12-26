@@ -197,6 +197,19 @@ const getAll = async (req, res, next) => {
     }
 }
 
+const remove = async (req, res, next) => {
+    try {
+        const id = req.params.id
+        await userService.remove(id)
+        res.status(200).json({
+            success: true,
+            message: "Delete user successfully"
+        })
+    } catch (e) {
+        next(e)
+    }
+}
+
 module.exports = {
     register,
     verify,
@@ -210,5 +223,6 @@ module.exports = {
     create,
     updateById,
     getById,
-    getAll
+    getAll,
+    remove
 }

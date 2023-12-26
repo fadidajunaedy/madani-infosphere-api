@@ -12,9 +12,10 @@ privateRouter.get('/api/users/me', userController.get)
 privateRouter.delete('/api/users/logout', userController.logout)
 privateRouter.post('/api/users/change-password', userController.changePassword)
 
-privateRouter.patch('/api/users/:id', adminMiddleware, userController.updateById)
 privateRouter.post('/api/users', adminMiddleware, userController.create)
+privateRouter.patch('/api/users/:id', adminMiddleware, userController.updateById)
 privateRouter.get('/api/users', adminMiddleware, userController.getAll)
 privateRouter.get('/api/users/:id', adminMiddleware, userController.getById)
+privateRouter.delete('/api/users/:id', adminMiddleware, userController.remove)
 
 module.exports = { privateRouter }
