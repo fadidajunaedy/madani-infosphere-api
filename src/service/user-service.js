@@ -6,7 +6,8 @@ const {
     getUserValidation,
     changePasswordUserValidation,
     forgotPasswordValidation,
-    resetPasswordUserValidation
+    resetPasswordUserValidation,
+    createUserValidation
 } = require("../validation/user-validation.js")
 const validate = require("../validation/validation.js")
 const hashPassword = require("../util/hash-password.js")
@@ -29,22 +30,22 @@ const User = prismaClient.user
 const VerificationToken = prismaClient.verificationToken
 
 const register = async (request) => {
-    const user = validate(registerUserValidation, request)
+    request= validate(registerUserValidation, request)
     
-    const usernameExist = await User.findFirst({ where: { username: user.username }})
+    const usernameExist = await User.findFirst({ where: { username: request.username }})
     if (usernameExist) {
         throw new ResponseError(400, "Username already registered")
     }
 
-    const emailExist = await User.findFirst({ where: { email: user.email }})
+    const emailExist = await User.findFirst({ where: { email: request.email }})
     if (emailExist) {
         throw new ResponseError(400, "Email already registered")
     }
     
-    user.password = hashPassword(user.password)
+    request.password = hashPassword(request.password)
     
     const newUser = await User.create({
-        data: user,
+        data: request,
         select: {
             id: true,
             name: true,
@@ -60,15 +61,7 @@ const register = async (request) => {
         where: { id: newUser.id },
         data: {
             verificationToken: verificationToken
-        },
-        select: {
-            id: true,
-            name: true,
-            username: true,
-            email: true,
-            position: true,
-            verificationToken: true,
-        },
+        }
     })
 
     const url = `http://localhost:5173/auth/verify?${userWithVerificationToken.verificationToken}`
@@ -270,6 +263,39 @@ const resetPassword = async (request) => {
     })
 }
 
+const create = async (request) => {
+    request= validate(createUserValidation, request)
+    
+    const usernameExist = await User.findFirst({ where: { username: request.username }})
+    if (usernameExist) {
+        throw new ResponseError(400, "Username already registered")
+    }
+
+    const emailExist = await User.findFirst({ where: { email: request.email }})
+    if (emailExist) {
+        throw new ResponseError(400, "Email already registered")
+    }
+    
+    request.password = hashPassword(request.password)
+    
+    const newUser = await User.create({ data: request })
+
+    if (!newUser.isVerified) {
+        const verificationToken = await generateEmailVerificationToken(newUser)
+        
+        const userWithVerificationToken = await User.update({
+            where: { id: newUser.id },
+            data: {
+                verificationToken: verificationToken
+            }
+        })
+        const url = `http://localhost:5173/auth/verify?${userWithVerificationToken.verificationToken}`
+        await sendEmailVerification(userWithVerificationToken.email, url)
+    }
+
+    return newUser
+}
+
 const getById = async (id) => {
     id = validate(getUserValidation, id)
     const user = await User.findUnique({ 
@@ -306,6 +332,7 @@ module.exports = {
     changePassword,
     forgotPassword,
     resetPassword,
+    create,
     getById,
     getAll
 }

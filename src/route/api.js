@@ -12,7 +12,8 @@ privateRouter.get('/api/users/me', userController.get)
 privateRouter.delete('/api/users/logout', userController.logout)
 privateRouter.post('/api/users/change-password', userController.changePassword)
 
-privateRouter.get('/api/users/:id', adminMiddleware, userController.getById)
+privateRouter.post('/api/users', adminMiddleware, userController.create)
 privateRouter.get('/api/users', adminMiddleware, userController.getAll)
+privateRouter.get('/api/users/:id', adminMiddleware, userController.getById)
 
 module.exports = { privateRouter }

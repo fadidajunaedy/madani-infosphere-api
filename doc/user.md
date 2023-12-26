@@ -308,12 +308,11 @@ Request Body :
 
 ```json
 {
-  "name": "fadidajunaedy",
-  "username": "fadidajunaedy",
-  "email": "fadidajunaedy@gmail.com",
-  "password": "Rahasia123-",
-  "position": "Executive Director",
-  "role": "role",
+  "name": "Fadida Zanetti Junaedy",
+  "username": "fadidajunaedy24",
+  "email": "fadidajunaedy24@gmail.com",
+  "position": "HRGA",
+  "password": "Qq332211-",
   "isVerified": true,
   "status": true
 }
@@ -324,7 +323,23 @@ Response Body Success :
 ```json
 {
   "success": true,
-  "message": "User register successfully"
+  "message": "User create successfully",
+  "data": {
+    "id": 2,
+    "name": "Fadida Zanetti Junaedy",
+    "username": "fadidajunaedy24",
+    "email": "fadidajunaedy24@gmail.com",
+    "password": "Qq332211-", //Hashed Password
+    "position": "HRGA",
+    "role": "user",
+    "isVerified": true,
+    "status": true,
+    "createdAt": "2023-12-26T15:56:49.520Z",
+    "updatedAt": "2023-12-26T15:56:49.520Z",
+    "verificationToken": null,
+    "refreshToken": null,
+    "resetPasswordToken": null
+  }
 }
 ```
 
@@ -348,12 +363,9 @@ Request Body :
 
 ```json
 {
-  "name": "fadidazanetti", //optional
-  "username": "fadidazanetti", //optional
-  "email": "fadidazanetti@gmail.com", //optional
+  "name": "Fadida Zanetti", //optional
   "password": "Rahasia123-", //optional
   "position": "HRGA", //optional
-  "role": "user", //optional
   "isVerified": true, //optional
   "status": false //optional
 }
@@ -367,14 +379,19 @@ Response Body Success :
   "message": "User update successfully",
   "data": {
     "id": 1,
-    "name": "fadidazanetti",
-    "username": "fadidazanetti",
-    "email": "fadidazanetti@gmail.com",
-    "password": "Rahasia123-",
+    "name": "Fadida Zanetti",
+    "username": "fadidajunaedy24",
+    "email": "fadidajunaedy24@gmail.com",
+    "password": "Rahasia123-", //Hashed Password
     "position": "HRGA",
     "role": "user",
     "isVerified": true,
-    "status": false
+    "status": true,
+    "createdAt": "2023-12-26T15:56:49.520Z",
+    "updatedAt": "2023-12-26T15:56:49.520Z",
+    "verificationToken": null,
+    "refreshToken": null,
+    "resetPasswordToken": null
   }
 }
 ```

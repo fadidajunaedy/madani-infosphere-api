@@ -140,6 +140,20 @@ const resetPassword = async (req, res, next) => {
     }
 }
 
+const create = async (req, res, next) => {
+    try {
+        const request = req.body
+        const result = await userService.create(request)
+        res.status(200).json({
+            success: true,
+            message: "Create user Successfully",
+            data: result
+        })
+    } catch (e) {
+        next(e)
+    }
+}
+
 const getById = async (req, res, next) => {
     try {
         const id = req.params.id
@@ -177,6 +191,7 @@ module.exports = {
     changePassword,
     forgotPassword,
     resetPassword,
+    create,
     getById,
     getAll
 }

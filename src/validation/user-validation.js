@@ -6,8 +6,15 @@ const registerUserValidation = Joi.object({
     username: Joi.string().required(),
     email: Joi.string().email().required(),
     password: passwordComplexity().required(),
+    position: Joi.string().required()
+})
+
+const createUserValidation = Joi.object({
+    name: Joi.string().required(),
+    username: Joi.string().required(),
+    email: Joi.string().email().required(),
+    password: passwordComplexity().required(),
     position: Joi.string().required(),
-    role: Joi.string().default("user"),
     isVerified: Joi.boolean().default(false),
     status: Joi.boolean().default(false)
 })
@@ -46,5 +53,6 @@ module.exports = {
     getUserValidation,
     changePasswordUserValidation,
     forgotPasswordValidation,
-    resetPasswordUserValidation
+    resetPasswordUserValidation,
+    createUserValidation
 }
