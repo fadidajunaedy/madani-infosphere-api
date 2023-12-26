@@ -99,6 +99,7 @@ const verify = async (token) => {
             verificationToken: token 
         },
         data: {
+            isVerified: true,
             verificationToken: null
         },
         select: {
@@ -111,7 +112,67 @@ const verify = async (token) => {
     })
 }
 
+const login = async (request) => {
+    request = validate(loginUserValidation, request)
+    const user = await User.findUnique({ where: { email: request.email } })
+
+    if (!user) {
+        throw new ResponseError(401, "Email or password is wrong")
+    }
+
+    const hashedPassword = hashPassword(request.password)
+    if (hashedPassword !== user.password) {
+        throw new ResponseError(401, "Email or password is wrong")
+    }
+
+    console.log(user.id)
+
+    if (!user.isVerified) {
+        if (!user.verificationToken) {
+            const verificationToken = await generateEmailVerificationToken(user)
+            await User.update({ 
+                where: {
+                    id: user.id
+                },
+                data: {
+                    verificationToken: verificationToken
+                }
+            })
+            const url = `http://localhost:5173/auth/verify?${verificationToken}`
+            await sendEmailVerification(user.email, url)
+            throw new ResponseError(403, "A verification email has been sent to your email account, please verify.")
+        }
+        throw new ResponseError(403, "Please verify your email first")
+    }
+
+    if (!user.status) {
+        throw new ResponseError(400, "Your account has not been or is not activated by admin")
+    }
+
+    const accessToken = await generateAccessToken(user)
+    
+    let refreshToken
+    refreshToken = user.refreshToken
+    if (!user.refreshToken) {
+        const newRefreshToken = await generateRefreshToken(user)
+        await User.update({ 
+            where: {
+                id: user.id
+            },
+            data: {
+                refreshToken: newRefreshToken
+            }
+        })
+
+        refreshToken = newRefreshToken
+    }
+
+    return { accessToken, refreshToken }
+
+}
+
 module.exports = {
     register,
-    verify
+    verify,
+    login
 }

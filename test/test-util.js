@@ -8,7 +8,7 @@ const createTestUser = async () => {
             username: "test",
             email: "test@gmail.com",
             position: "TEST",
-            password: hashPassword('rahasia')
+            password: hashPassword('Rahasia123-')
         }
     })
 }

@@ -28,7 +28,36 @@ const verify = async (req, res, next) => {
     }
 }
 
+const login = async (req, res, next) => {
+    try {
+        const request = req.body
+        const result = await userService.login(request)
+
+        res.cookie('accessToken', result.accessToken, { 
+            sameSite: 'strict',
+            maxAge: 180 * 60 * 1000, // 180 menit dalam milidetik
+            httpOnly: true,
+            withCredentials: true, 
+        })
+        
+        res.cookie('refreshToken', result.refreshToken, { 
+            sameSite: 'strict',
+            maxAge: 90 * 24 * 60 * 60 * 1000, // 90 hari dalam milidetik
+            httpOnly: true,
+            withCredentials: true, 
+        })
+
+        res.status(200).json({
+            success: true,
+            message: "User Login Successfully"
+        })
+    } catch (e) {
+        next(e)
+    }
+}
+
 module.exports = {
     register,
-    verify
+    verify,
+    login
 }

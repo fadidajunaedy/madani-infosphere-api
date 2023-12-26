@@ -94,3 +94,55 @@ describe('POST /api/users/register', function () {
         expect(addDuplicateUser.body.errors).toBeDefined()
     })
 })
+
+jest.mock('jsonwebtoken', () => ({
+    verify: jest.fn(() => ({
+      id: 123,
+      exp: Math.floor(Date.now() / 1000) + 3600, // Token expires in 1 hour
+    })),
+}))
+  
+jest.mock('path-to-your-model-file', () => ({
+    findFirst: jest.fn(),
+    update: jest.fn(),
+}))
+
+describe('PATCH /api/users/verify/:token', function () {
+    const validToken = 'valid_token';
+    const invalidToken = 'invalid_token';
+    const expiredToken = 'expired_token';
+
+    beforeEach(() => {
+        // Reset mock functions before each test
+        jest.clearAllMocks();
+    })
+
+    test('should successfully verify user with a valid token', async () => {
+        // Mock the database response for a valid token
+        const mockUser = { id: 123, verificationToken: validToken };
+        require('path-to-your-model-file').findFirst.mockResolvedValueOnce(mockUser);
+    
+        const result = await userService.verify(validToken);
+    
+        expect(result).toEqual({
+          id: mockUser.id,
+          name: expect.any(String),
+          username: expect.any(String),
+          email: expect.any(String),
+          position: expect.any(String),
+        });
+    
+        // Verify that update was called with the correct parameters
+        expect(require('path-to-your-model-file').update).toHaveBeenCalledWith({
+          where: { id: mockUser.id, verificationToken: validToken },
+          data: { verificationToken: null },
+          select: {
+            id: true,
+            name: true,
+            username: true,
+            email: true,
+            position: true,
+          },
+        });
+      });
+})
