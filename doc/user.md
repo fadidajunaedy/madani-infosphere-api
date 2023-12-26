@@ -46,7 +46,7 @@ Response Body Error :
 
 ## Verify Email User API
 
-Endpoint : PATCH /api/users/:id/verify/:token
+Endpoint : PATCH /api/users/verify/:token
 
 Response Body Success :
 
@@ -61,7 +61,7 @@ Response Body Error :
 
 ```json
 {
-  "errors": "Invalid verification link"
+  "errors": "Invalid token"
 }
 ```
 
@@ -128,11 +128,7 @@ Response Body Success :
     "name": "Fadida Junaedy",
     "username": "fadidajunaedy",
     "email": "fadidajunaedy@gmail.com",
-    "password": "Rahasia123-", // should be encryption by bcrypt
-    "position": "HRGA",
-    "role": "user",
-    "isVerified": true, // should verify email first
-    "status": true // admin or super-admin would activate the status
+    "position": "HRGA"
   }
 }
 ```

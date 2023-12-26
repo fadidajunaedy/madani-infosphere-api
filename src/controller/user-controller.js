@@ -56,8 +56,24 @@ const login = async (req, res, next) => {
     }
 }
 
+const update = async (req, res, next) => {
+    try {
+        const user = req.user
+        const request = req.body
+        const result = await userService.update(user, request)
+        res.status(200).json({
+            success: true,
+            message: "User Update Successfully",
+            data: result
+        })
+    } catch(e) {
+        next(e)
+    }
+}
+
 module.exports = {
     register,
     verify,
-    login
+    login,
+    update
 }

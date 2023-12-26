@@ -2,6 +2,7 @@ const express = require("express")
 const cors = require('cors')
 const cookieParser = require("cookie-parser")
 const { publicRouter } = require("../route/public-api.js")
+const { privateRouter } = require("../route/api.js")
 const errorMiddleware = require("../middleware/error-middleware.js")
 const { config } = require("dotenv")
 
@@ -21,6 +22,7 @@ web.use(
 )
 
 web.use(publicRouter)
+web.use(privateRouter)
 
 web.use(errorMiddleware)
 

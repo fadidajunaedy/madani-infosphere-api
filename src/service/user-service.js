@@ -168,11 +168,30 @@ const login = async (request) => {
     }
 
     return { accessToken, refreshToken }
+}
 
+const update = async (user, request) => {
+    request = validate(updateUserValidation, request)
+    
+    console.log(request)
+    return await User.update({
+        where: {
+            id: user.id
+        },
+        data: request,
+        select: {
+            id: true,
+            name: true,
+            username: true,
+            email: true,
+            position: true
+        }
+    })
 }
 
 module.exports = {
     register,
     verify,
-    login
+    login,
+    update
 }

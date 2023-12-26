@@ -21,11 +21,7 @@ const loginUserValidation = Joi.object({
 
 const updateUserValidation = Joi.object({
     name: Joi.string().optional(),
-    password: passwordComplexity().optional(),
     position: Joi.string().optional(),
-    role: Joi.string().default("user"),
-    isVerified: Joi.boolean().default(0),
-    status: Joi.boolean().default(0)
 })
 
 const getUserValidation = Joi.number().required()
