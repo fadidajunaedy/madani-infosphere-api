@@ -6,8 +6,8 @@ const createReportValidation = Joi.object({
     subcategory: Joi.string().required(),
     description: Joi.string().required(),
     tags: Joi.array().items(Joi.string()).required(),
-    file: Joi.any(),
-    linkFile: Joi.any(),
+    file: Joi.string().optional(),
+    linkFile: Joi.string().optional(),
     year: Joi.number().optional(),
     relatedProgram: Joi.string().optional(),
     createdUser: Joi.string().required()

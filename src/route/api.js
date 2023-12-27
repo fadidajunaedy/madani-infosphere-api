@@ -21,5 +21,6 @@ privateRouter.get('/api/users/:id', adminMiddleware, userController.getById)
 privateRouter.delete('/api/users/:id', adminMiddleware, userController.remove)
 
 privateRouter.post('/api/reports', reportController.upload, reportController.create)
+privateRouter.patch('/api/reports/:id', reportController.upload, reportController.update)
 
 module.exports = { privateRouter }
