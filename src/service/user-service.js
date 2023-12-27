@@ -24,12 +24,9 @@ const {
     sendEmailResetPassword
 } = require("../util/send-mail.js")
 const jwt = require("jsonwebtoken")
-const crypto = require("crypto")
 const ResponseError = require("../error/response-error.js")
 const prismaClient = require("../application/database.js")
-const { request } = require("http")
 const User = prismaClient.user
-const VerificationToken = prismaClient.verificationToken
 
 const register = async (request) => {
     request= validate(registerUserValidation, request)
