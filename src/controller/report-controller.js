@@ -36,7 +36,13 @@ const update = async (req, res, next) => {
 
 const get = async (req, res, next) => {
     try {
-        
+        const id = req.params.id
+        const result = await reportService.get(id)
+        res.status(200).json({
+            success: true,
+            message: "Get report successfully",
+            data: result
+        })
     } catch(e) {
         next(e)
     }
@@ -44,7 +50,12 @@ const get = async (req, res, next) => {
 
 const getAll = async (req, res, next) => {
     try {
-        
+        const result = await reportService.getAll()
+        res.status(200).json({
+            success: true,
+            message: "Get reports successfully",
+            data: result
+        })
     } catch(e) {
         next(e)
     }
@@ -52,7 +63,12 @@ const getAll = async (req, res, next) => {
 
 const remove = async (req, res, next) => {
     try {
-        
+        const id = req.params.id
+        await reportService.remove(id)
+        res.status(200).json({
+            success: true,
+            message: "Delete report successfully"
+        })
     } catch(e) {
         next(e)
     }

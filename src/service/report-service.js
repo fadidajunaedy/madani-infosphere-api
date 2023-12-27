@@ -58,7 +58,7 @@ const update = async (id, request) => {
             }
             console.log('Previous file deleted, insert new file');
         })
-    }
+    }   
 
     return await Report.update({
         where: {
@@ -68,7 +68,43 @@ const update = async (id, request) => {
     })
 }
 
+const get = async (id) => {
+    id = validate(getReportValidation, id)
+
+    const report = await Report.findUnique({ where: { id: id } })
+    if (!report) {
+        throw new ResponseError(404, "Report is not found")
+    }
+
+    return report
+}
+
+const getAll = async () => {
+    const report = await Report.findMany({})
+
+    if (!report) {
+        throw new ResponseError(404, "Report is not found")
+    }
+
+    return report
+}
+
+const remove = async (id) => {
+    id = validate(getReportValidation, id)
+
+    const report = await Report.findUnique({ where: { id: id } })
+    if (!report) {
+        throw new ResponseError(404, "Report is not found")
+    }
+
+    return await Report.delete({ where: { id: id } })
+}
+
+
 module.exports = {
     create,
-    update
+    update,
+    get,
+    getAll,
+    remove
 }
