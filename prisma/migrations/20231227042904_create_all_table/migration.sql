@@ -34,6 +34,7 @@ CREATE TABLE `tags` (
 -- CreateTable
 CREATE TABLE `reports` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `title` VARCHAR(100) NOT NULL,
     `category` VARCHAR(100) NOT NULL,
     `subcategory` VARCHAR(100) NOT NULL,
     `description` VARCHAR(255) NOT NULL,
