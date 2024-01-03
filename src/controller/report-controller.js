@@ -21,9 +21,10 @@ const create = async (req, res, next) => {
 
 const update = async (req, res, next) => {
     try {
+        const user = req.user
         const id = req.params.id
         const request = req.body
-        const result = await reportService.update(id, request)
+        const result = await reportService.update(user, id, request)
         res.status(200).json({
             success: true,
             message: "Update report successfully",
@@ -63,8 +64,9 @@ const getAll = async (req, res, next) => {
 
 const remove = async (req, res, next) => {
     try {
+        const user = req.user
         const id = req.params.id
-        await reportService.remove(id)
+        await reportService.remove(user,id)
         res.status(200).json({
             success: true,
             message: "Delete report successfully"

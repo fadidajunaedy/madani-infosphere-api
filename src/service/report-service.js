@@ -26,13 +26,17 @@ const create = async (request) => {
     }
 }
 
-const update = async (id, request) => {
+const update = async (user, id, request) => {
     id = validate(getReportValidation, id)
     request = validate(updateReportValidation, request)
 
     const report = await Report.findUnique({ where: { id: id } })
     if (!report) {
         throw new ResponseError(404, "Report is not found")
+    }
+
+    if ((!(user.username === report.createdUser || user.role === "admin" || user.role === "super-admin"))) {
+        throw new ResponseError(403, "You cannot edit this report")
     }
 
     if (request.file && request.linkFile) {
@@ -89,12 +93,16 @@ const getAll = async () => {
     return report
 }
 
-const remove = async (id) => {
+const remove = async (user, id) => {
     id = validate(getReportValidation, id)
 
     const report = await Report.findUnique({ where: { id: id } })
     if (!report) {
         throw new ResponseError(404, "Report is not found")
+    }
+
+    if ((!(user.username === report.createdUser || user.role === "admin" || user.role === "super-admin"))) {
+        throw new ResponseError(403, "You cannot remove this report")
     }
 
     return await Report.delete({ where: { id: id } })
